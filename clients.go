@@ -93,10 +93,12 @@ func clientHandler(w http.ResponseWriter, r *http.Request) {
 			jsonErrorReport(w, r, gerr.Error(), gerr.Status())
 			return
 		}
+		/*
 		if !opUser.IsAdmin() && !opUser.IsSelf(chefClient) {
 			jsonErrorReport(w, r, "You are not allowed to perform that action.", http.StatusForbidden)
 			return
 		}
+		 */
 
 		/* API docs are wrong here re: public_key vs.
 		 * certificate. Also orgname (at least w/ open source)
