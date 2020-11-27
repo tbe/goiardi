@@ -3,15 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="35250bff-940d-4237-acdf-7b59b437e0a7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/mysql_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/mysql_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/postgres_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/postgres_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/sql_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/client/sql_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/mysql_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/user/mysql_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/postgres_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/user/postgres_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/sql_funcs.go" beforeDir="false" afterPath="$PROJECT_DIR$/user/sql_funcs.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/user/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/users.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.go" beforeDir="false" afterPath="$PROJECT_DIR$/data.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
