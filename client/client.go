@@ -31,14 +31,16 @@ import (
 	"database/sql"
 	"encoding/gob"
 	"fmt"
+	"net/http"
+
 	"github.com/ctdk/chefcrypto"
+	"github.com/tideland/golib/logger"
+
 	"github.com/ctdk/goiardi/config"
 	"github.com/ctdk/goiardi/datastore"
 	"github.com/ctdk/goiardi/indexer"
 	"github.com/ctdk/goiardi/secret"
 	"github.com/ctdk/goiardi/util"
-	"github.com/tideland/golib/logger"
-	"net/http"
 )
 
 // A Client and a user are very similar, with some small differences - users
@@ -52,7 +54,7 @@ type Client struct {
 	ChefType    string `json:"chef_type"`
 	Validator   bool   `json:"validator"`
 	Orgname     string `json:"orgname"`
-	pubKey      string
+	PubKey      string `json:"public_key"`
 	Admin       bool   `json:"admin"`
 	Certificate string `json:"certificate"`
 }
@@ -116,7 +118,7 @@ func New(clientname string) (*Client, util.Gerror) {
 		JSONClass:   "Chef::ApiClient",
 		Validator:   false,
 		Orgname:     "",
-		pubKey:      "",
+		PubKey:      "",
 		Admin:       false,
 		Certificate: "",
 	}
@@ -566,14 +568,14 @@ func (c *Client) PublicKey() string {
 	if config.UsingExternalSecrets() {
 		pk, err := secret.GetPublicKey(c)
 		if err != nil {
-			// pubKey's not goign to work very well if we can't get
+			// PubKey's not goign to work very well if we can't get
 			// it....
 			logger.Errorf(err.Error())
 			return ""
 		}
 		return pk
 	}
-	return c.pubKey
+	return c.PubKey
 }
 
 // SetPublicKey sets the client's public key.
@@ -587,7 +589,7 @@ func (c *Client) SetPublicKey(pk interface{}) error {
 		if config.UsingExternalSecrets() {
 			secret.SetPublicKey(c, pk)
 		} else {
-			c.pubKey = pk
+			c.PubKey = pk
 		}
 	default:
 		err := fmt.Errorf("invalid type %T for public key", pk)
@@ -616,7 +618,7 @@ func useAuth() bool {
 }
 
 func (c *Client) export() *privClient {
-	return &privClient{Name: &c.Name, NodeName: &c.NodeName, JSONClass: &c.JSONClass, ChefType: &c.ChefType, Validator: &c.Validator, Orgname: &c.Orgname, PublicKey: &c.pubKey, Admin: &c.Admin, Certificate: &c.Certificate}
+	return &privClient{Name: &c.Name, NodeName: &c.NodeName, JSONClass: &c.JSONClass, ChefType: &c.ChefType, Validator: &c.Validator, Orgname: &c.Orgname, PublicKey: &c.PubKey, Admin: &c.Admin, Certificate: &c.Certificate}
 }
 
 func (c *Client) flatExport() *flatClient {

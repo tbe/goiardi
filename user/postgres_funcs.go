@@ -33,7 +33,7 @@ func (u *User) savePostgreSQL() util.Gerror {
 		gerr := util.CastErr(err)
 		return gerr
 	}
-	_, err = tx.Exec("SELECT goiardi.merge_users($1, $2, $3, $4, $5, $6, $7, $8)", u.Username, u.Name, u.Email, u.Admin, u.pubKey, u.passwd, u.salt, defaultOrgID)
+	_, err = tx.Exec("SELECT goiardi.merge_users($1, $2, $3, $4, $5, $6, $7, $8)", u.Username, u.Name, u.Email, u.Admin, u.PubKey, u.passwd, u.salt, defaultOrgID)
 	if err != nil {
 		tx.Rollback()
 		gerr := util.CastErr(err)

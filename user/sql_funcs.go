@@ -36,7 +36,7 @@ func checkForUserSQL(dbhandle datastore.Dbhandle, name string) (bool, error) {
 
 func (u *User) fillUserFromSQL(row datastore.ResRow) error {
 	var email sql.NullString
-	err := row.Scan(&u.Username, &u.Name, &u.Admin, &u.pubKey, &email, &u.passwd, &u.salt)
+	err := row.Scan(&u.Username, &u.Name, &u.Admin, &u.PubKey, &email, &u.passwd, &u.salt)
 	if err != nil {
 		return err
 	}

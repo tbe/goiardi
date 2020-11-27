@@ -37,7 +37,7 @@ func checkForClientSQL(dbhandle datastore.Dbhandle, name string) (bool, error) {
 }
 
 func (c *Client) fillClientFromSQL(row datastore.ResRow) error {
-	err := row.Scan(&c.Name, &c.NodeName, &c.Validator, &c.Admin, &c.Orgname, &c.pubKey, &c.Certificate)
+	err := row.Scan(&c.Name, &c.NodeName, &c.Validator, &c.Admin, &c.Orgname, &c.PubKey, &c.Certificate)
 	if err != nil {
 		return err
 	}

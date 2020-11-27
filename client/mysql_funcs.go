@@ -37,7 +37,7 @@ func (c *Client) saveMySQL() error {
 		return err
 	}
 
-	_, err = tx.Exec("INSERT INTO clients (name, nodename, validator, admin, public_key, certificate, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) ON DUPLICATE KEY UPDATE name = ?, nodename = ?, validator = ?, admin = ?, public_key = ?, certificate = ?, updated_at = NOW()", c.Name, c.NodeName, c.Validator, c.Admin, c.pubKey, c.Certificate, c.Name, c.NodeName, c.Validator, c.Admin, c.pubKey, c.Certificate)
+	_, err = tx.Exec("INSERT INTO clients (name, nodename, validator, admin, public_key, certificate, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) ON DUPLICATE KEY UPDATE name = ?, nodename = ?, validator = ?, admin = ?, public_key = ?, certificate = ?, updated_at = NOW()", c.Name, c.NodeName, c.Validator, c.Admin, c.PubKey, c.Certificate, c.Name, c.NodeName, c.Validator, c.Admin, c.PubKey, c.Certificate)
 	if err != nil {
 		tx.Rollback()
 		return err

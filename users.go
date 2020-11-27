@@ -93,10 +93,6 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 			jsonErrorReport(w, r, err.Error(), http.StatusNotFound)
 			return
 		}
-		if !opUser.IsAdmin() && !opUser.IsSelf(chefUser) {
-			jsonErrorReport(w, r, "You are not allowed to perform that action.", http.StatusForbidden)
-			return
-		}
 
 		/* API docs are wrong here re: public_key vs.
 		 * certificate. Also orgname (at least w/ open source)

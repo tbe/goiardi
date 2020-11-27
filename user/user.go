@@ -34,11 +34,12 @@ import (
 	"net/http"
 
 	"github.com/ctdk/chefcrypto"
+	"github.com/tideland/golib/logger"
+
 	"github.com/ctdk/goiardi/config"
 	"github.com/ctdk/goiardi/datastore"
 	"github.com/ctdk/goiardi/secret"
 	"github.com/ctdk/goiardi/util"
-	"github.com/tideland/golib/logger"
 )
 
 // User is, uh, a user. It's very similar to a Client, but subtly different, as
@@ -48,7 +49,7 @@ type User struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Admin    bool   `json:"admin"`
-	pubKey   string
+	PubKey   string `json:"public_key"`
 	passwd   string
 	salt     []byte
 }
@@ -99,7 +100,7 @@ func New(name string) (*User, util.Gerror) {
 		Name:     name,
 		Admin:    false,
 		Email:    "",
-		pubKey:   "",
+		PubKey:   "",
 		salt:     salt,
 	}
 	return user, nil
@@ -484,14 +485,14 @@ func (u *User) PublicKey() string {
 	if config.UsingExternalSecrets() {
 		pk, err := secret.GetPublicKey(u)
 		if err != nil {
-			// pubKey's not goign to work very well if we can't get
+			// PubKey's not goign to work very well if we can't get
 			// it....
 			logger.Errorf(err.Error())
 			return ""
 		}
 		return pk
 	}
-	return u.pubKey
+	return u.PubKey
 }
 
 // SetPublicKey does what it says on the tin. Part of the Actor interface.
@@ -508,7 +509,7 @@ func (u *User) SetPublicKey(pk interface{}) error {
 				return pubErr
 			}
 		} else {
-			u.pubKey = pk
+			u.PubKey = pk
 		}
 	default:
 		err := fmt.Errorf("invalid type %T for public key", pk)
@@ -603,7 +604,7 @@ func (u *User) URLType() string {
 }
 
 func (u *User) export() *privUser {
-	return &privUser{Name: &u.Name, Username: &u.Username, PublicKey: &u.pubKey, Admin: &u.Admin, Email: &u.Email, Passwd: &u.passwd, Salt: &u.salt}
+	return &privUser{Name: &u.Name, Username: &u.Username, PublicKey: &u.PubKey, Admin: &u.Admin, Email: &u.Email, Passwd: &u.passwd, Salt: &u.salt}
 }
 
 func (u *User) GobEncode() ([]byte, error) {

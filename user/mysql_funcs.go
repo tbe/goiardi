@@ -39,7 +39,7 @@ func (u *User) saveMySQL() util.Gerror {
 		gerr.SetStatus(http.StatusConflict)
 		return gerr
 	}
-	_, err = tx.Exec("INSERT INTO users (name, displayname, admin, public_key, passwd, salt, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) ON DUPLICATE KEY UPDATE name = ?, displayname = ?, admin = ?, public_key = ?, passwd = ?, salt = ?, updated_at = NOW()", u.Username, u.Name, u.Admin, u.pubKey, u.passwd, u.salt, u.Username, u.Name, u.Admin, u.pubKey, u.passwd, u.salt)
+	_, err = tx.Exec("INSERT INTO users (name, displayname, admin, public_key, passwd, salt, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) ON DUPLICATE KEY UPDATE name = ?, displayname = ?, admin = ?, public_key = ?, passwd = ?, salt = ?, updated_at = NOW()", u.Username, u.Name, u.Admin, u.PubKey, u.passwd, u.salt, u.Username, u.Name, u.Admin, u.PubKey, u.passwd, u.salt)
 	if err != nil {
 		tx.Rollback()
 		gerr := util.CastErr(err)
