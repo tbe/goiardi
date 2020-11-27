@@ -21,12 +21,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/ctdk/goiardi/actor"
 	"github.com/ctdk/goiardi/databag"
 	"github.com/ctdk/goiardi/loginfo"
 	"github.com/ctdk/goiardi/reqctx"
 	"github.com/ctdk/goiardi/util"
-	"net/http"
 )
 
 func dataHandler(w http.ResponseWriter, r *http.Request) {
@@ -63,13 +64,13 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		case http.MethodPost:
 			/*
-			// another conflict with chef-vault damnn it. We should migrate to hashicorp vault asap
-			if !opUser.IsAdmin() {
-				jsonErrorReport(w, r, "You are not allowed to perform this action", http.StatusForbidden)
-				return
-			}
+				// another conflict with chef-vault damnn it. We should migrate to hashicorp vault asap
+				if !opUser.IsAdmin() {
+					jsonErrorReport(w, r, "You are not allowed to perform this action", http.StatusForbidden)
+					return
+				}
 
-			 */
+			*/
 			dbData, jerr := parseObjJSON(r.Body)
 			if jerr != nil {
 				jsonErrorReport(w, r, jerr.Error(), http.StatusBadRequest)
@@ -140,10 +141,14 @@ func dataHandler(w http.ResponseWriter, r *http.Request) {
 			jsonErrorReport(w, r, "Method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
-		if opUser.IsValidator() || (!opUser.IsAdmin() && (r.Method != http.MethodGet && r.Method != http.MethodHead)) {
-			jsonErrorReport(w, r, "You are not allowed to perform this action", http.StatusForbidden)
-			return
-		}
+		/*
+		    // another conflict with chef-vault damnn it. We should migrate to hashicorp vault asap
+			if opUser.IsValidator() || (!opUser.IsAdmin() && (r.Method != http.MethodGet && r.Method != http.MethodHead)) {
+				jsonErrorReport(w, r, "You are not allowed to perform this action", http.StatusForbidden)
+				return
+			}
+
+		*/
 
 		// Do HEAD responses here, before starting to fetch full data
 		// bags and the like.
